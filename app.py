@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from google.cloud import storage
+import os
 
 app = Flask(__name__)
 
@@ -8,17 +10,31 @@ def index():
 
 @app.route("/manchester")
 def manchester():
-    base_url = "https://storage.googleapis.com/spaces-and-faces/images/manchester/"
-    valid_extensions = (".jpg", ".png")
+    # Init GCS client
+    client = storage.Client()
+    bucket = client.bucket("spaces-and-faces")
+    
+    # List image files in the manchester folder
+    blobs = bucket.list_blobs(prefix="images/manchester/")
+    base_url = "https://storage.googleapis.com/spaces-and-faces/"
 
-    image_names = [
-        f"{i}.png" if f"{i}.png" in EXISTING_IMAGES else f"{i}.jpg"
-        for i in range(1, 23)
+    # Filter image files (png/jpg only)
+    image_urls = [
+        f"{base_url}{blob.name}" for blob in blobs
+        if blob.name.lower().endswith((".jpg", ".png"))
     ]
 
-    image_urls = [f"{base_url}{name}" for name in image_names]
-    return render_template("manchester.html", images=image_urls)
+    # Optional: Sort by numeric filename
+    def numeric_sort_key(url):
+        filename = url.split("/")[-1].split(".")[0]
+        try:
+            return int(filename)
+        except ValueError:
+            return 9999
 
+    image_urls.sort(key=numeric_sort_key)
+
+    return render_template("manchester.html", images=image_urls)
 
 @app.route("/brussels")
 def brussels():

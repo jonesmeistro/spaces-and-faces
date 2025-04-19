@@ -9,12 +9,16 @@ def index():
 @app.route("/manchester")
 def manchester():
     base_url = "https://storage.googleapis.com/spaces-and-faces/images/manchester/"
+    valid_extensions = (".jpg", ".png")
+
     image_names = [
-        f"{i}.png" if i in [1, 5, 6, 7, 8, 12, 14, 15, 16, 17, 21] else f"{i}.jpg"
+        f"{i}.png" if f"{i}.png" in EXISTING_IMAGES else f"{i}.jpg"
         for i in range(1, 23)
     ]
+
     image_urls = [f"{base_url}{name}" for name in image_names]
     return render_template("manchester.html", images=image_urls)
+
 
 @app.route("/brussels")
 def brussels():

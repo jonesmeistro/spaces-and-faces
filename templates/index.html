@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spaces and Faces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .homepage {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .links a {
+      display: block;
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      text-decoration: none;
+      color: #0077cc;
+      transition: color 0.2s ease;
+    }
+
+    .links a:hover {
+      color: #004b87;
+    }
+  </style>
+</head>
+<body>
+  <div class="homepage">
+    <h1>Spaces and Faces</h1>
+    <div class="links">
+      <a href="{{ url_for('manchester') }}">Manchester</a>
+      <a href="{{ url_for('brussels') }}">Brussels</a>
+    </div>
+  </div>
+</body>
+</html>

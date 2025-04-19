@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manchester Gallery – Spaces and Faces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/css/lightbox.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <h1>Manchester</h1>
+    <p>A street photography gallery from Manchester, UK.</p>
+
+    <div class="gallery">
+      {% for image in images %}
+        <a href="{{ image }}" data-lightbox="manchester" data-title="{{ image.split('/')[-1] }}">
+          <img src="{{ image }}" alt="{{ image.split('/')[-1] }}">
+        </a>
+      {% endfor %}
+    </div>
+
+    <p><a href="{{ url_for('index') }}">← Back to homepage</a></p>
+  </div>
+
+  <!-- ✅ Lightbox Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightbox2@2/dist/js/lightbox.min.js"></script>
+  <script>
+    lightbox.option({
+      'resizeDuration': 200,
+      'wrapAround': true,
+      'fadeDuration': 200,
+      'imageFadeDuration': 200,
+      'alwaysShowNavOnTouchDevices': true
+    });
+  </script>
+</body>
+</html>
